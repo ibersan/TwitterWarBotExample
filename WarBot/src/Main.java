@@ -33,7 +33,7 @@ public final class Main {
 
             String updateStatusRateInput;
             do {
-                System.out.println("Enter the status rate between turns (in seconds):");
+                System.out.println("Enter the rate between turns (in seconds):");
                 updateStatusRateInput = sc.nextLine();
             } while (!Utils.isValidInteger(updateStatusRateInput));
             sc.close();
@@ -42,10 +42,10 @@ public final class Main {
             WarSimulator simulator = new WarSimulator(warName, players);
             simulator.setUpdateStatusRate(updateStatusRate);
 
-            final List<Player> finalPlayers = players;
+            final List<Player> playersReference = players;
             Notifier notifier = message -> {
                 System.out.println(message);
-                ResultsImageGenerator.generate(finalPlayers, RESULTS_OUTPUT_PATH);
+                ResultsImageGenerator.generate(playersReference, RESULTS_OUTPUT_PATH);
 
                 try {
                     TwitterManager.updateStatus(message, new File(RESULTS_OUTPUT_PATH));

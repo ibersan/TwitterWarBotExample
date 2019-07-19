@@ -2,10 +2,8 @@ import models.Kill;
 import models.Notifier;
 import models.Player;
 import models.War;
-import utils.PlayersLoader;
 import utils.Utils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -30,7 +28,7 @@ public class WarSimulator {
         this.notifier = notifier;
     }
 
-    public void setUpdateStatusRate(int rateSeconds){
+    public void setUpdateStatusRate(int rateSeconds) {
         this.rateSeconds = rateSeconds;
     }
 
@@ -77,7 +75,7 @@ public class WarSimulator {
     private String getWinMessage() {
         String winMessage = "";
         Player winner = war.getWinnerIfThereIsOne();
-        if(winner != null){
+        if (winner != null) {
             winMessage = "Winner!! " + winner.toString();
         }
         return winMessage;
@@ -87,11 +85,13 @@ public class WarSimulator {
         int random1 = Utils.randomNumber(0, war.getCurrentPlayersCount());
         int random2;
         int cont = 0;
-        Player killer = war.getAlivePlayer(random1);
+
         do {
             random2 = Utils.randomNumber(0, war.getCurrentPlayersCount());
             cont++;
         } while (random1 == random2 && cont <= (war.getCurrentPlayersCount() / 2) + 1);
+
+        Player killer = war.getAlivePlayer(random1);
         Player victim = war.getAlivePlayer(random2);
 
         return new Kill(killer, victim);

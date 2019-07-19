@@ -28,6 +28,15 @@ public class Player {
     }
 
     public void kill(Player victim) {
+        if (dead && victim.isDead()) {
+            throw new IllegalStateException("Killer and victim are dead. You should check if " +
+                    "players are alive before.");
+        } else if (dead) {
+            throw new IllegalStateException("Killer is dead. You should check if killer is alive before.");
+        } else if (victim.isDead()) {
+            throw new IllegalStateException("Victim is dead. You should check if victim is alive before.");
+        }
+
         victim.die();
         if (!this.equals(victim)) {
             kills++;
